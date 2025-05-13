@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加密封存</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-page">
+        <div id="toolbar">
+            <img id="btn-save" class="icon" src="./icon/save_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg">
+            <img id="btn-load" class="icon" src="./icon/file_open_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg">
+        </div>
+        <div id="text-wrap">
+            <textarea id="text"></textarea>
+        </div>
+    </div>
+    <div id="popup" class="popup hide">
+        <div class="panel hide" id="panel1">
+            <p>
+                輸入密碼：
+                <input type="password" id="pwd">
+            </p>
+            <p>
+                再次輸入：
+                <input type="password" id="pwd2">
+            </p>
+            <p class="al-r">
+                <input type="button" id="btn-encrypt" value="確認">
+                <input type="button" class="cancel" value="取消">
+            </p>
+        </div>
+        <div class="panel hide" id="panel2">
+            <p>
+                選擇檔案
+                <input type="file" id="file">
+            </p>
+            <p>
+                輸入密碼
+                <input type="password" id="pwd3">
+            </p>
+            <p class="al-r">
+                <input type="button" id="btn-decrypt" value="解密">
+                <input type="button" class="cancel" value="取消">
+            </p>
+        </div>
+    </div>
+    <script type="module" src="dist/index.bundle.js"></script>
+</body>
+</html>

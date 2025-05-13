@@ -1,0 +1,63 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body,
+div {
+    padding: 0px;
+    margin: 0px;
+}
+
+#main-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#text-wrap {
+    background-color: gray;
+    flex-basis: auto;
+    flex-grow: 1;
+    position: relative;
+}
+
+#text {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    resize: none;
+    padding: 0.2em 0.4em;
+}
+
+.popup {
+    display: flex;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel {
+    display: inline-block;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.al-r {
+    text-align: right;
+}
+
+.hide {
+    display: none;
+}
