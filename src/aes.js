@@ -7,10 +7,12 @@ import { deflateSync, inflateSync } from 'fflate';
  * @property {string}  iv   iv in base64
  * @property {string}  salt salt in base64
  * @property {boolean} comp is compressed
+ * @property {string}  alg  algorithm
  */
 
 const tEnc = new TextEncoder();
 const tDec = new TextDecoder();
+const algorithm = 'PBKDF2-HMAC-SHA512 (1000 iterations, with salt) -> AES-256-GCM (128-bit tag, no AAD)';
 
 /**
  * @param {string} password 
@@ -50,10 +52,11 @@ async function encrypt(text, password) {
         compressed ? compressData : data
     );
     return {
-        data: base64_encode(cipher),
+        alg: algorithm,
+        comp: compressed,
         iv: base64_encode(iv),
         salt: base64_encode(salt),
-        comp: compressed
+        data: base64_encode(cipher),
     };
 }
 
