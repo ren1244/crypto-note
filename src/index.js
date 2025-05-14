@@ -1,5 +1,8 @@
 import * as aes from './aes.js';
 
+/** htmlTemplate 在執行 build.js 時，會被替換成 html 內容，之後只要替換「const cipher = "";」*/
+const htmlTemplate = "";
+
 function clearInput() {
     document.querySelector('#pwd').value = '';
     document.querySelector('#pwd2').value = '';
@@ -21,7 +24,15 @@ function closePopup() {
     popup.classList.toggle('hide', true);
 }
 
+let proc = 'save';
+
+document.querySelector('#btn-archive').addEventListener('click', () => {
+    proc = 'archive';
+    openPopup('panel1');
+});
+
 document.querySelector('#btn-save').addEventListener('click', () => {
+    proc = 'save';
     openPopup('panel1');
 });
 
@@ -29,6 +40,16 @@ document.querySelector('#btn-load').addEventListener('click', () => {
     openPopup('panel2');
 });
 
+function downloadFile(filename, data, mime) {
+    let url = URL.createObjectURL(new Blob([data], { type: mime }));
+    let tTag = document.createElement('a');
+    tTag.href = url;
+    tTag.download = filename;
+    tTag.click();
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 100);
+}
 
 // 點選加密按鈕
 document.querySelector('#btn-encrypt').addEventListener('click', async () => {
@@ -45,20 +66,22 @@ document.querySelector('#btn-encrypt').addEventListener('click', async () => {
     }
     try {
         let cipher = await aes.encrypt(text, pwd);
-        let url = URL.createObjectURL(new Blob([JSON.stringify(cipher)], { type: 'application/json' }));
-        let tTag = document.createElement('a');
-        tTag.href = url;
-        tTag.download = 'cipher.json';
-        tTag.click();
-        setTimeout(() => {
-            URL.revokeObjectURL(url);
-        }, 100);
+        switch (proc) {
+            case 'archive':
+                let html = htmlTemplate.replace('const cipher = "";', `const cipher = ${JSON.stringify(cipher)};`)
+                downloadFile('cipher.html', html, 'text/html');
+                break;
+            case 'save':
+                downloadFile('cipher.json', JSON.stringify(cipher), 'application/json');
+                break;
+            default:
+                throw 'bad proc';
+        }
+        closePopup();
     } catch (e) {
         alert('發生錯誤：' + e);
     }
-    closePopup();
 });
-
 
 // 點選解密按鈕
 document.querySelector('#btn-decrypt').addEventListener('click', async () => {
