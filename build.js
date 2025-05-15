@@ -28,7 +28,7 @@ import fs from 'fs';
         input: 'src/index.js',
         plugins: [
             nodeResolve(),
-            //terser(),
+            terser(),
             {
                 transform(code, id) {
                     if (id.search(/index\.js$/) > -1) {
