@@ -58,10 +58,6 @@ function base64svg(filename) {
         '../icon/file-key-2.svg',
         base64svg(path.join(__dirname, './icon/file-key-2.svg'))
     );
-    const dirPath = path.join(__dirname, './dist');
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-    fs.writeFileSync(path.join(__dirname, './dist/index.html'), html);
+    fs.writeFileSync(path.join(__dirname, './index.html'), html);
 
 })();
