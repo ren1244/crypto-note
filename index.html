@@ -47,7 +47,20 @@
                 <input type="button" class="cancel" value="取消">
             </p>
         </div>
+        <div class="panel hide" id="panel3">
+            <p>
+                輸入密碼
+                <input type="password" id="pwd4">
+            </p>
+            <p id="dec-log"></p>
+            <p class="al-r">
+                <input type="button" id="btn-decrypt2" value="解密">
+            </p>
+        </div>
     </div>
+    <script>
+        window.cipher = null;
+    </script>
     <script type="module" src="dist/index.bundle.js"></script>
 </body>
 </html>

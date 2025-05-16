@@ -1,7 +1,5 @@
 import * as aes from './aes.js';
-
-/** htmlTemplate 在執行 build.js 時，會被替換成 html 內容，之後只要替換「const cipher = "";」*/
-const htmlTemplate = "";
+import getSelf from './get-self.js';
 
 function clearInput() {
     document.querySelector('#pwd').value = '';
@@ -68,7 +66,11 @@ document.querySelector('#btn-encrypt').addEventListener('click', async () => {
         let cipher = await aes.encrypt(text, pwd);
         switch (proc) {
             case 'archive':
-                let html = htmlTemplate.replace('const cipher = "";', `const cipher = ${JSON.stringify(cipher)};`)
+                let html = await getSelf();
+                html = html.replace(
+                    /window.cipher = null;/m,
+                    `window.cipher = ${JSON.stringify(cipher)};`
+                );
                 downloadFile('cipher.html', html, 'text/html');
                 break;
             case 'save':
@@ -109,4 +111,22 @@ document.querySelectorAll('.cancel').forEach(ele => {
     ele.addEventListener('click', () => {
         closePopup();
     });
+});
+
+if(window.cipher) {
+    openPopup('panel3');
+}
+
+// 點選解密按鈕
+document.querySelector('#btn-decrypt2').addEventListener('click', async () => {
+    try {
+        let pwd = document.querySelector('#pwd4').value;
+        let cipherJson = window.cipher;
+        let text = await aes.decrypt(cipherJson, pwd);
+        document.querySelector('#text').value = text;
+        closePopup();
+    } catch (e) {
+        document.querySelector('#dec-log').textContent = '解密錯誤';
+        console.log(e);
+    }
 });
