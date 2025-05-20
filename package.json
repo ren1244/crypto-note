@@ -4,7 +4,8 @@
         "build": "node build.js"
     },
     "dependencies": {
-        "fflate": "^0.8.2"
+        "fflate": "^0.8.2",
+        "html-itself": "^1.0.0"
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^16.0.1",

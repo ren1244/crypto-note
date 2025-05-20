@@ -1,5 +1,5 @@
 import * as aes from './aes.js';
-import getSelf from './get-self.js';
+import { getApp, getPayload } from 'html-itself';
 
 function clearInput() {
     document.querySelector('#pwd').value = '';
@@ -66,12 +66,7 @@ document.querySelector('#btn-encrypt').addEventListener('click', async () => {
         let cipher = await aes.encrypt(text, pwd);
         switch (proc) {
             case 'archive':
-                let html = await getSelf();
-                html = html.replace(
-                    /window.cipher = null;/m,
-                    `window.cipher = ${JSON.stringify(cipher)};`
-                );
-                downloadFile('cipher.html', html, 'text/html');
+                getApp(cipher, 'cipher.html');
                 break;
             case 'save':
                 downloadFile('cipher.json', JSON.stringify(cipher), 'application/json');
@@ -113,7 +108,7 @@ document.querySelectorAll('.cancel').forEach(ele => {
     });
 });
 
-if(window.cipher) {
+if(getPayload()) {
     openPopup('panel3');
 }
 
@@ -121,7 +116,7 @@ if(window.cipher) {
 document.querySelector('#btn-decrypt2').addEventListener('click', async () => {
     try {
         let pwd = document.querySelector('#pwd4').value;
-        let cipherJson = window.cipher;
+        let cipherJson = getPayload();
         let text = await aes.decrypt(cipherJson, pwd);
         document.querySelector('#text').value = text;
         closePopup();
